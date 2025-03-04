@@ -24,20 +24,21 @@ pipeline {
             }
         }
     }
-    stage('start backend'){
+    stage('Start Backend') {
         steps {
             dir('todo-backend') {
-                sh 'nohup npm run dev &'
+                sh 'nohup npm run dev > backend.log 2>&1 &'
             }
         }
     }
-    stage('start frontend'){
-        steps {
-            dir('todo-frontend') {
-                sh 'nohup npm run dev &'
-            }
+    stage('Start Frontend') {
+    steps {
+        dir('todo-frontend') {
+            sh 'nohup npm run dev > frontend.log 2>&1 &'
         }
     }
+}
+
     }
     post{
         success {
