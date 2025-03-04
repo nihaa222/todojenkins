@@ -13,17 +13,23 @@ pipeline {
             }
         }
         
-        stage('Install Backend Dependencies') {
+        stage('Prepare Backend') {
             steps {
                 dir('todo-backend') {
-                    sh 'npm install'
+                    // Change ownership to jenkins user
+                    sh 'sudo chown -R jenkins:jenkins .'
+                    
+                    // Ensure npm cache and node_modules have correct permissions
+                    sh 'mkdir -p node_modules'
+                    sh 'sudo chmod -R 775 node_modules'
                 }
             }
         }
         
-        stage('Install Frontend Dependencies') {
+        stage('Install Backend Dependencies') {
             steps {
-                dir('todo-frontend') {
+                dir('todo-backend') {
+                    // Install dependencies with npm
                     sh 'npm install'
                 }
             }
@@ -32,16 +38,11 @@ pipeline {
         stage('Start Backend') {
             steps {
                 dir('todo-backend') {
-                    // Use start instead of dev for production
+                    // Start backend with logging
                     sh 'nohup npm run start > backend.log 2>&1 &'
-                }
-            }
-        }
-        
-        stage('Start Frontend') {
-            steps {
-                dir('todo-frontend') {
-                    sh 'nohup npm run dev -- --host 0.0.0.0 --port 5000 > frontend.log 2>&1 &'
+                    
+                    // Wait and show logs for debugging
+                    sh 'sleep 5 && cat backend.log'
                 }
             }
         }
@@ -49,13 +50,10 @@ pipeline {
     
     post {
         success {
-            echo 'Deployment successful! 🚀'
-            echo 'Backend accessible at http://localhost:3000'
-            echo 'Frontend accessible at http://localhost:5000'
+            echo 'Backend deployment successful! 🚀'
         }
-        
         failure {
-            echo 'Deployment failed! 💥'
+            echo 'Backend deployment failed! 💥'
         }
     }
 }
