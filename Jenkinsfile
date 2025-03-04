@@ -33,7 +33,7 @@ pipeline {
     }
     stage('start frontend'){
         steps{
-            dir(todo-frontend){
+            dir('todo-frontend'){
                 sh 'npm run dev'
             }
         }
