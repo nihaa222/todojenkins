@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        MONGODB_URI = credentials('MONGO_URI')
+        MONGODB_URI = credentials('MONGODB_URI')
         VITE_API_BASE_URL = credentials('VITE_API_BASE_URL')
     }
     stages {
