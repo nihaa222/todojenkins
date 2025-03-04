@@ -28,6 +28,7 @@ pipeline {
         steps {
             dir('todo-backend') {
                 sh 'nohup npm run dev > backend.log 2>&1 &'
+                echo "Hello 😑😑"
             }
         }
     }
