@@ -4,7 +4,7 @@ pipeline {
         MONGODB_URI = credentials('MONGO_URI')
         VITE_API_BASE_URL = credentials('REACT_APP_API_URL')
     }
-    stage {
+    stages {
         stage('Checkout') {
             steps {
                 checkout scm
@@ -19,14 +19,14 @@ pipeline {
     }
     stage('Install Frontend Dependencies'){
         steps{
-            dir(todo-frontend){
+            dir('todo-frontend'){
                 sh 'npm install'
             }
         }
     }
     stage('start backend'){
         steps{
-            dir(todo-backend){
+            dir('todo-backend'){
                 sh 'npm run dev'
             }
         }
