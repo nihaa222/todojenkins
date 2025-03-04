@@ -10,31 +10,31 @@ pipeline {
                 checkout scm
             }
         }
-    stage('Install Backend Dependencies '){
-        steps{
+    stage('Install Backend Dependencies ') {
+        steps {
             dir('todo-backend') {
                 sh 'npm install'
             }
         }
     }
     stage('Install Frontend Dependencies'){
-        steps{
-            dir('todo-frontend'){
+        steps {
+            dir('todo-frontend') {
                 sh 'npm install'
             }
         }
     }
     stage('start backend'){
-        steps{
-            dir('todo-backend'){
-                sh 'npm run dev'
+        steps {
+            dir('todo-backend') {
+                sh 'nohup npm run dev &'
             }
         }
     }
     stage('start frontend'){
-        steps{
-            dir('todo-frontend'){
-                sh 'npm run dev'
+        steps {
+            dir('todo-frontend') {
+                sh 'nohup npm run dev &'
             }
         }
     }
