@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.todo{
+  height: 50%;
+  width: 50%;
+  margin-inline: auto;
+  margin-top: 20%
+}
+
+.input{
+  width: 60%;
+  height: 30px;
+  margin-inline: auto;
+}
+
+.add{
+  padding: 8px
+}
